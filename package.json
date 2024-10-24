@@ -1,0 +1,41 @@
+{
+  "name": "antd-table-rtk",
+  "private": true,
+  "version": "1.0.0",
+  "author": {
+    "name": "Vladislav Eremin",
+    "url": "https://github.com/productmap"
+  },
+  "homepage": "https://productmap.github.io/antd-table-rtk/",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "tsc -b && vite build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.3.0",
+    "antd": "^5.21.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.1.2",
+    "redux-persist": "^6.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.13",
+    "gh-pages": "^6.2.0",
+    "globals": "^15.11.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.10.0",
+    "vite": "^5.4.9"
+  }
+}
