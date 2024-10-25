@@ -1,7 +1,8 @@
 # Ant Design Table component with persist store on React with RTK Query
 
 ## Description
-Saves sorting and filtering settings in LocalStorage and restores them on page reload. 
+Saves sorting and filtering settings in LocalStorage and restores them on page reload.
+Multiple columns sorted
 
 ## Installation
 

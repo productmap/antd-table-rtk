@@ -11,7 +11,7 @@ import {
   setPagination,
   setSorters,
 } from './store/slices/tableSlice';
-import { DataType, Filters, Sorts } from './types.ts';
+import { Filters, Sorts, TableData } from './types.ts';
 import type { SorterResult } from 'antd/es/table/interface';
 import { FilterValue } from 'antd/lib/table/interface';
 
@@ -22,20 +22,33 @@ const App: FC = () => {
   );
   const { data, isLoading } = useGetDataQuery();
 
+  const getUniqueOptions = (data: TableData[] | undefined, key: string) => {
+    if (!data) return [];
+    return Array.from(new Set(data.map((item) => item[key]))).map((value) => ({
+      text: value,
+      value,
+    }));
+  };
+
   const handleTableChange = useCallback(
     (
       _: TablePaginationConfig,
       filters: Record<string, FilterValue | null>,
-      sorter: SorterResult<DataType> | SorterResult<DataType>[]
+      sorter: SorterResult<TableData> | SorterResult<TableData>[]
     ) => {
-      const sortedColumns = Array.isArray(sorter)
-        ? sorter.reduce(
-            (acc, curr) => ({ ...acc, [curr.columnKey as string]: curr.order }),
-            {}
-          )
-        : sorter
-        ? { [sorter.columnKey as string]: sorter.order }
-        : {};
+      let sortedColumns:
+        | SorterResult<TableData>
+        | { [p: string]: 'descend' | 'ascend' | null | undefined };
+      if (Array.isArray(sorter)) {
+        sortedColumns = sorter.reduce(
+          (acc, curr) => ({ ...acc, [curr.columnKey as string]: curr.order }),
+          {}
+        );
+      } else {
+        sortedColumns = sorter
+          ? { [sorter.columnKey as string]: sorter.order }
+          : {};
+      }
 
       dispatch(setFilters(filters as Filters));
       dispatch(setSorters(sortedColumns as Sorts));
@@ -43,19 +56,13 @@ const App: FC = () => {
     [dispatch]
   );
 
-  const tableColumns: TableColumnsType<DataType> = [
+  const tableColumns: TableColumnsType<TableData> = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      filters: [
-        { text: 'Joe', value: 'Joe' },
-        { text: 'Jim', value: 'Jim' },
-      ],
-      filteredValue: filtersState.name || null,
-      onFilter: (value, record) => record.name.includes(value as string),
-      sortDirections: ['descend', 'ascend'],
-      defaultSortOrder: 'descend',
+      sortDirections: ['ascend', 'descend'],
+      defaultSortOrder: 'ascend',
       sorter: {
         compare: (a, b) =>
           a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
@@ -65,33 +72,61 @@ const App: FC = () => {
       ellipsis: true,
     },
     {
+      title: 'Gender',
+      dataIndex: 'gender',
+      key: 'gender',
+      sortDirections: ['descend', 'ascend'],
+      defaultSortOrder: 'descend',
+      sorter: {
+        compare: (a, b) => a.gender.localeCompare(b.gender),
+        multiple: 2,
+      },
+      sortOrder: sorterState['gender'] ? sorterState['gender'] : null,
+      filters: getUniqueOptions(data, 'gender'),
+      filteredValue: filtersState.gender || null,
+      onFilter: (value, record) =>
+        value === 'male'
+          ? record.gender === 'male'
+          : record.gender === 'female',
+    },
+    {
       title: 'Age',
       dataIndex: 'age',
       key: 'age',
       sortDirections: ['descend', 'ascend'],
-      defaultSortOrder: 'descend',
+      defaultSortOrder: 'ascend',
       sorter: {
         compare: (a, b) => a.age - b.age,
-        multiple: 2,
+        multiple: 3,
       },
       sortOrder: sorterState['age'] ? sorterState['age'] : null,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+      sortDirections: ['ascend', 'descend'],
+      defaultSortOrder: 'ascend',
+      sorter: {
+        compare: (a, b) =>
+          a.email.replace(/\./g, '').localeCompare(b.email.replace(/\./g, '')),
+        multiple: 3,
+      },
+      sortOrder: sorterState['email'] ? sorterState['email'] : null,
       ellipsis: true,
     },
     {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-      sortDirections: ['descend', 'ascend'],
-      defaultSortOrder: 'descend',
-      filters: [
-        { text: 'London', value: 'London' },
-        { text: 'New York', value: 'New York' },
-      ],
+      sortDirections: ['ascend', 'descend'],
+      defaultSortOrder: 'ascend',
+      filters: getUniqueOptions(data, 'address'),
       filteredValue: filtersState.address || null,
       onFilter: (value, record) => record.address.includes(value as string),
       sorter: {
-        compare: (a, b) => a.address.length - b.address.length,
-        multiple: 3,
+        compare: (a, b) => a.address.localeCompare(b.address),
+        multiple: 5,
       },
       sortOrder: sorterState['address'] ? sorterState['address'] : null,
       ellipsis: true,
@@ -111,10 +146,10 @@ const App: FC = () => {
           Clear filters and sorters
         </Button>
       </Space>
-      <Table<DataType>
+      <Table<TableData>
         loading={isLoading}
         columns={tableColumns}
-        dataSource={data || []}
+        dataSource={data}
         onChange={handleTableChange}
         pagination={{
           pageSize: paginationState.pageSize,

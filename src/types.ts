@@ -1,14 +1,33 @@
 import { SortOrder } from 'antd/lib/table/interface';
 
-export interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
+interface DataType {
+  name: {
+    first: string;
+    last: string;
+  };
+  gender: string;
+  email: string;
+  dob: {
+    age: number;
+  };
+  location: {
+    country: string;
+  };
+  login: {
+    uuid: string;
+  };
 }
 
 export interface apiResponse {
-  data: DataType[];
+  results: DataType[];
+}
+
+export interface TableData {
+  name: string;
+  gender: string;
+  age: number;
+  email: string;
+  address: string;
 }
 
 export interface Filters {
