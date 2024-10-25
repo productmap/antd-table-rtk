@@ -2,7 +2,7 @@
 
 ## Description
 * Saves sorting and filtering settings in LocalStorage and restores them on page reload.
-* Multiple columns sorted
+* Multiple columns sorting and filtering.
 
 ## Installation
 

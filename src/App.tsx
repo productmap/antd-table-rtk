@@ -1,12 +1,13 @@
 import { FC, memo, useCallback } from 'react';
 import { useGetDataQuery } from './store/api';
-import { RootState, useAppDispatch, useAppSelector } from './store/store';
+import { useAppDispatch, useAppSelector } from './store/store';
 import type { TableColumnsType, TablePaginationConfig } from 'antd';
 import { Button, Space, Table } from 'antd';
 import {
   clearAll,
   clearFilters,
   clearSorters,
+  getTableState,
   setFilters,
   setPagination,
   setSorters,
@@ -17,11 +18,11 @@ import { FilterValue } from 'antd/lib/table/interface';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
-  const { filtersState, sorterState, paginationState } = useAppSelector(
-    (state: RootState) => state.table
-  );
+  const { filtersState, sorterState, paginationState } =
+    useAppSelector(getTableState);
   const { data, isLoading } = useGetDataQuery();
 
+  // get unique options from data for filters
   const getUniqueOptions = (data: TableData[] | undefined, key: string) => {
     if (!data) return [];
     return Array.from(new Set(data.map((item) => item[key]))).map((value) => ({
@@ -36,6 +37,7 @@ const App: FC = () => {
       filters: Record<string, FilterValue | null>,
       sorter: SorterResult<TableData> | SorterResult<TableData>[]
     ) => {
+      // Get the sorter state
       let sortedColumns:
         | SorterResult<TableData>
         | { [p: string]: 'descend' | 'ascend' | null | undefined };
