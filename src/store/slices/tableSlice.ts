@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Filters, Pagination, Sorts, TableState } from '../../types.ts';
+import { Filters, Pagination, Sorts, TableState } from '../../types/types.ts';
 
 const initialState: TableState = {
   filtersState: {},

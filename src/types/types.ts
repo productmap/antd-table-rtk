@@ -30,8 +30,10 @@ export interface TableData {
   address: string;
 }
 
+export type TableDataIndex = keyof TableData;
+
 export interface Filters {
-  [key: string]: string[];
+  [key: string]: string[] | [number, number] | number | null;
 }
 
 export interface Sorts {
