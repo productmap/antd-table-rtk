@@ -1,4 +1,4 @@
-# Ant Design Table component with persist store on React with RTK Query
+# Ant Design Table component with persist store with RTK Query
 
 Demo: [https://productmap.github.io/antd-table-rtk/](https://productmap.github.io/antd-table-rtk/)
 
