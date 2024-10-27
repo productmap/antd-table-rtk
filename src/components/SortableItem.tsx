@@ -1,12 +1,12 @@
-import React, { useRef } from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { useRef } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 export const SortableItem = ({ id, children }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement | null>(null);
 
   const style = {
     transform: CSS.Transform.toString(transform),
