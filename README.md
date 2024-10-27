@@ -1,8 +1,12 @@
 # Ant Design Table component with persist store on React with RTK Query
 
+Demo: [https://productmap.github.io/antd-table-rtk/](https://productmap.github.io/antd-table-rtk/)
+
 ## Description
 * Saves sorting and filtering settings in LocalStorage and restores them on page reload.
 * Multiple columns sorting and filtering.
+* Range filter widget.
+* Drag and drop sorting and activation of columns.
 
 ## Installation
 

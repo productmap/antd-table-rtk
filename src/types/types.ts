@@ -1,4 +1,5 @@
 import { SortOrder } from 'antd/lib/table/interface';
+import { Key } from 'react';
 
 interface DataType {
   name: {
@@ -33,7 +34,7 @@ export interface TableData {
 export type TableDataIndex = keyof TableData;
 
 export interface Filters {
-  [key: string]: string[] | [number, number] | number | null;
+  [key: string]: string[] | [Key, Key] | [number, number] | number | null;
 }
 
 export interface Sorts {
@@ -44,8 +45,15 @@ export interface Pagination {
   pageSize: number;
 }
 
+export interface ColumnState {
+  key: string;
+  title: string;
+  checked: boolean;
+}
+
 export interface TableState {
   filtersState: Filters;
   sorterState: Sorts;
   paginationState: Pagination;
+  columnsState: ColumnState[];
 }

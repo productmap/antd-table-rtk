@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Filters, Pagination, Sorts, TableState } from '../../types/types.ts';
+import {
+  ColumnState,
+  Filters,
+  Pagination,
+  Sorts,
+  TableState,
+} from '../../types/types.ts';
 
 const initialState: TableState = {
   filtersState: {},
@@ -7,6 +13,7 @@ const initialState: TableState = {
   paginationState: {
     pageSize: 10,
   },
+  columnsState: [],
 };
 
 const tableSlice = createSlice({
@@ -21,6 +28,9 @@ const tableSlice = createSlice({
     },
     setPagination(state, action: PayloadAction<Pagination>) {
       state.paginationState = action.payload;
+    },
+    setColumns(state, action: PayloadAction<ColumnState[]>) {
+      state.columnsState = action.payload;
     },
     clearFilters(state) {
       state.filtersState = {};
@@ -42,6 +52,7 @@ export const {
   setFilters,
   setSorters,
   setPagination,
+  setColumns,
   clearSorters,
   clearFilters,
   clearAll,

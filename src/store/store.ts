@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import tableReducer from './slices/tableSlice';
 import { api } from './api';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const persistConfig = {
   key: 'root',
