@@ -1,5 +1,4 @@
 import { FC, memo, useCallback, useMemo } from 'react';
-import { useGetDataQuery } from '../store/api.ts';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import {
   Button,
@@ -28,17 +27,18 @@ import { FilterValue } from 'antd/lib/table/interface';
 import styles from './DataTable.module.scss';
 
 type dataTableProps = {
-  fetching: boolean;
+  data: TableData[] | undefined;
+  isLoading: boolean;
+  isFetching: boolean;
 };
 
 /**
  * DataTable component
  */
-const DataTable: FC<dataTableProps> = ({ fetching }) => {
+const DataTable: FC<dataTableProps> = ({ data, isLoading, isFetching }) => {
   const dispatch = useAppDispatch();
   const { filtersState, sorterState, paginationState, columnsState } =
     useAppSelector(getTableState);
-  const { data, isLoading } = useGetDataQuery();
 
   /**
    * Get unique options from data for filters
@@ -306,7 +306,7 @@ const DataTable: FC<dataTableProps> = ({ fetching }) => {
 
   return (
     <Table<TableData>
-      loading={fetching || isLoading}
+      loading={isFetching || isLoading}
       columns={getColumns()}
       dataSource={data}
       onChange={handleTableChange}

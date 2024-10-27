@@ -13,7 +13,7 @@ import { SettingOutlined } from '@ant-design/icons';
 import styles from './App.module.scss';
 
 const App: FC = () => {
-  const { refetch, isFetching } = useGetDataQuery();
+  const { data, isLoading, refetch, isFetching } = useGetDataQuery();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
 
@@ -48,7 +48,7 @@ const App: FC = () => {
             </Button>
           </Popover>
         </Space>
-        <DataTable fetching={isFetching} />
+        <DataTable data={data} isLoading={isLoading} isFetching={isFetching} />
       </Space>
     </div>
   );
