@@ -9,21 +9,9 @@
     }
   ],
   "compilerOptions": {
-    "baseUrl": "./",
+//    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
-//      "@types": [
-//        "src/types.ts"
-//      ],
-//      "@components/*": [
-//        "src/components/*"
-//      ],
-//      "@store/*": [
-//        "src/store/*"
-//      ],
-//      "@api": [
-//        "src/store/api.ts"
-//      ]
     }
   }
 }
